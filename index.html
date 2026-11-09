@@ -20,7 +20,7 @@
     <meta property="og:image" content="https://ziv101010.github.io/images/og.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="פלמינגו בלרנקה">
+    <meta property="og:image:alt" content="שוק כריסמס בבוקרשט">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Escape Mode · דילים לטיסות מישראל">
     <meta name="twitter:description" content="בריחות קצרות מישראל במחיר שפוי. דילים לטיסות, רכב וסיורים – Escape Mode.">
@@ -31,12 +31,12 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap">
 
     <!-- Based on LittleLink (MIT) https://github.com/sethcottle/littlelink -->
-    <link rel="stylesheet" href="css/reset.css?v=2">
-    <link rel="stylesheet" href="css/style.css?v=2">
-    <link rel="stylesheet" href="css/escape.css?v=2">
+    <link rel="stylesheet" href="css/reset.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/escape.css?v=3">
 
-    <script src="deals.js?v=2" defer></script>
-    <script src="app.js?v=2" defer></script>
+    <script src="deals.js?v=3" defer></script>
+    <script src="app.js?v=3" defer></script>
   </head>
   <body>
     <div class="container">
@@ -60,12 +60,17 @@
             <!-- Filled by app.js from deals.js -->
           </section>
 
+          <p class="section-label" id="more-label" hidden>עוד דילים</p>
+          <div id="more-deals" hidden>
+            <!-- Secondary deals filled by app.js -->
+          </div>
+
           <a
             class="btn btn-ig"
             id="cta-louz"
             href="https://www.instagram.com/escape.mode.go/"
             rel="noopener noreferrer"
-          >רוצים לוז מלא? תגיבו ׳לוז׳ באינסטגרם</a>
+          >רוצים לוז מלא? תגיבו לוז באינסטגרם</a>
 
           <section class="tools" id="tools-section" hidden>
             <p class="section-label">כלים שאני משתמש בהם</p>
@@ -84,7 +89,9 @@
             · MIT
           </p>
           <p class="photo-credit">
-            תמונת שיתוף: Wikimedia Commons
+            תמונות: Wikimedia Commons —
+            <span class="ltr">Joe Mabel (CC BY-SA 2.0), J Stimp (CC BY 2.0)</span>
+            · גם
             <span class="ltr">Mike McBey (CC BY 2.0), Diego Delso (CC BY-SA 4.0), Valantis Antoniades (CC BY-SA 3.0), Mboesch (CC BY-SA 4.0), Alaexis (CC BY-SA 4.0)</span>
           </p>
         </footer>

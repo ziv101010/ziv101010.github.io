@@ -287,3 +287,28 @@ footer.em-footer a {
   .deal-card h2 { font-size: 1.2rem; }
   .btn { font-size: 0.95rem; }
 }
+
+/* Deal card image (Bucharest featured) */
+.deal-card .deal-image {
+  display: block;
+  width: calc(100% + 2.4rem);
+  max-width: none;
+  margin: -1.2rem -1.2rem 1rem;
+  border-radius: 18px 18px 0 0;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+
+.deal-card--secondary {
+  margin-top: 0.85rem;
+  opacity: 0.98;
+}
+
+.deal-card--secondary .deal-badge {
+  background: #efe7dc;
+  color: #5a4a3a;
+}
+
+#more-deals {
+  width: 100%;
+}
