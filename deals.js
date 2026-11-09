@@ -33,6 +33,7 @@ window.ESCAPE_MODE_DEALS = {
   /* The currently promoted destination. Swap this block for the next deal. */
   active: {
     id: "larnaca-hanukkah-2026",
+    flag: "🇨🇾",
     badge: "הדיל הפעיל",
     title: "לרנקה · קפריסין",
     meta: "4 ימים · טיסה ישירה · חנוכה",
@@ -48,7 +49,7 @@ window.ESCAPE_MODE_DEALS = {
       },
       {
         id: "car",
-        label: "🚗 רכב ליום בלפקרה",
+        label: "🚗 השכרת רכב בלרנקה",
         className: "btn-car",
         url: "https://localrent.tpk.lu/LOFhsXU6"
       },

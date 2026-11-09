@@ -3,8 +3,6 @@
   Hebrew RTL, mobile-first, no trackers
 */
 
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap");
-
 :root {
   --em-bg: #fff8f1;
   --em-bg-2: #fff1e4;
@@ -28,6 +26,12 @@ html {
 }
 
 body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
   background:
     radial-gradient(1200px 600px at 100% -10%, #ffe2c8 0%, transparent 55%),
     radial-gradient(900px 500px at -10% 20%, #d7f3ef 0%, transparent 50%),
@@ -209,6 +213,16 @@ h1.brand {
   margin: 1.1rem 0 0.35rem;
 }
 
+/* LittleLink's `section { text-align: left }` is physical left. Start is the right edge in RTL. */
+#tools-section {
+  text-align: start;
+}
+
+#tools-section .btn {
+  justify-content: flex-start;
+  text-align: start;
+}
+
 .tools .deal-actions {
   gap: 0.5rem;
 }
@@ -232,6 +246,22 @@ footer.em-footer {
 footer.em-footer .credit {
   margin-top: 0.65rem;
   opacity: 0.75;
+}
+
+footer.em-footer .photo-credit {
+  margin-top: 0.45rem;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  color: var(--em-muted);
+  opacity: 0.72;
+}
+
+footer.em-footer .photo-credit .ltr {
+  display: block;
+  margin-top: 0.15rem;
+  direction: ltr;
+  unicode-bidi: isolate;
+  text-align: center;
 }
 
 footer.em-footer a {
