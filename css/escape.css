@@ -1,0 +1,259 @@
+/*
+  Escape Mode – overrides on top of LittleLink (MIT)
+  Hebrew RTL, mobile-first, no trackers
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --em-bg: #fff8f1;
+  --em-bg-2: #fff1e4;
+  --em-ink: #1c2430;
+  --em-muted: #5b6573;
+  --em-card: #ffffff;
+  --em-border: #f0e2d2;
+  --em-coral: #ff6b4a;
+  --em-coral-deep: #e85a3c;
+  --em-teal: #0f9b8e;
+  --em-teal-deep: #0b7f74;
+  --em-sky: #3d8bfd;
+  --em-sand: #f6c89f;
+  --em-gold: #f0a202;
+  --em-radius: 1.1rem;
+  --em-shadow: 0 10px 28px rgba(28, 36, 48, 0.08);
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 100% -10%, #ffe2c8 0%, transparent 55%),
+    radial-gradient(900px 500px at -10% 20%, #d7f3ef 0%, transparent 50%),
+    var(--em-bg);
+  color: var(--em-ink);
+  font-family: "Rubik", "Open Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.container {
+  padding-top: 1.6rem;
+  max-width: 26rem;
+}
+
+.avatar {
+  width: 7rem;
+  height: 7rem;
+  border: 3px solid #fff;
+  box-shadow: 0 8px 24px rgba(255, 107, 74, 0.22);
+  margin-bottom: 1rem;
+  background: var(--em-sand);
+}
+
+h1.brand {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--em-ink);
+}
+
+.tagline {
+  margin: 0 0 1.5rem 0 !important;
+  font-size: 1rem !important;
+  line-height: 1.45 !important;
+  color: var(--em-muted);
+  font-weight: 500;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 0.25rem 0 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--em-teal-deep);
+  text-transform: none;
+}
+
+.section-label::before,
+.section-label::after {
+  content: "";
+  height: 1px;
+  width: 2.2rem;
+  background: linear-gradient(to left, transparent, var(--em-teal));
+  opacity: 0.55;
+}
+
+.section-label::after {
+  background: linear-gradient(to right, transparent, var(--em-teal));
+}
+
+/* Active deal card */
+.deal-card {
+  background: var(--em-card);
+  border: 1px solid var(--em-border);
+  border-radius: calc(var(--em-radius) + 0.15rem);
+  box-shadow: var(--em-shadow);
+  padding: 1.15rem 1rem 1rem;
+  margin: 0 0 0.95rem;
+  text-align: right;
+}
+
+.deal-card .deal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: linear-gradient(135deg, #ffe8df, #fff3ea);
+  color: var(--em-coral-deep);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.28rem 0.65rem;
+  border-radius: 999px;
+  margin-bottom: 0.65rem;
+}
+
+.deal-card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--em-ink);
+}
+
+.deal-card .deal-meta {
+  margin: 0 0 0.95rem;
+  font-size: 0.92rem;
+  color: var(--em-muted);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.deal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: none;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: #fff;
+  box-sizing: border-box;
+  transition: transform 0.12s ease, filter 0.12s ease, box-shadow 0.12s ease;
+  box-shadow: 0 6px 16px rgba(28, 36, 48, 0.12);
+}
+
+.btn:hover {
+  filter: brightness(1.04);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:focus-visible {
+  outline: 3px solid #ffd0c2;
+  outline-offset: 2px;
+}
+
+.btn-flight {
+  background: linear-gradient(135deg, var(--em-coral), #ff8a4c);
+}
+
+.btn-car {
+  background: linear-gradient(135deg, var(--em-teal), #17b3a3);
+}
+
+.btn-tour {
+  background: linear-gradient(135deg, var(--em-sky), #5aa4ff);
+}
+
+.btn-ig {
+  background: linear-gradient(135deg, #f58529, #dd2a7b 45%, #8134af);
+  margin-bottom: 0.35rem;
+}
+
+.btn-tool {
+  background: #fff;
+  color: var(--em-ink);
+  border: 1.5px solid var(--em-border);
+  box-shadow: none;
+  font-weight: 600;
+}
+
+.btn-tool:hover {
+  border-color: var(--em-sand);
+  background: #fffaf4;
+}
+
+.tools {
+  margin: 1.1rem 0 0.35rem;
+}
+
+.tools .deal-actions {
+  gap: 0.5rem;
+}
+
+.tools-note {
+  margin: 0.55rem 0 0 !important;
+  font-size: 0.8rem !important;
+  color: var(--em-muted) !important;
+  line-height: 1.4 !important;
+}
+
+footer.em-footer {
+  margin: 1.35rem 0 2rem;
+  padding: 0 0.25rem;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--em-muted);
+  text-align: center;
+}
+
+footer.em-footer .credit {
+  margin-top: 0.65rem;
+  opacity: 0.75;
+}
+
+footer.em-footer a {
+  color: var(--em-teal-deep);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* LTR islands for Latin brand names / URLs feel natural */
+.ltr {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+/* Hide unused LittleLink button chrome if any leaks */
+.button {
+  margin-bottom: 0.7rem;
+}
+
+@media (max-width: 360px) {
+  h1.brand { font-size: 1.6rem; }
+  .deal-card h2 { font-size: 1.2rem; }
+  .btn { font-size: 0.95rem; }
+}

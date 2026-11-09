@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html class="theme-light" lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Escape Mode · דילים לטיסות מישראל</title>
+    <link rel="icon" type="image/jpeg" href="images/favicon.jpg">
+    <meta name="description" content="בריחות קצרות מישראל במחיר שפוי. דילים לטיסות, רכב וסיורים – Escape Mode.">
+    <meta name="author" content="Escape Mode">
+    <meta name="theme-color" content="#fff8f1">
+    <meta name="robots" content="index,follow">
+
+    <!-- Based on LittleLink (MIT) https://github.com/sethcottle/littlelink -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/escape.css">
+
+    <script src="deals.js" defer></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="column">
+        <main>
+          <!-- Swap images/avatar.jpg with Zibo's real face photo when ready -->
+          <img
+            class="avatar avatar--rounded"
+            src="images/avatar.jpg"
+            alt="Escape Mode"
+            width="112"
+            height="112"
+            fetchpriority="high"
+          >
+
+          <h1 class="brand">Escape Mode</h1>
+          <p class="tagline">בריחות קצרות מישראל במחיר שפוי ✈️</p>
+
+          <p class="section-label" id="active-label">הדיל הפעיל</p>
+          <section class="deal-card" id="active-deal" aria-labelledby="active-label">
+            <!-- Filled by app.js from deals.js -->
+          </section>
+
+          <a
+            class="btn btn-ig"
+            id="cta-louz"
+            href="https://www.instagram.com/escape.mode.go/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >רוצים לוז מלא? תגיבו ׳לוז׳ באינסטגרם</a>
+
+          <section class="tools" id="tools-section" hidden>
+            <p class="section-label">כלים שאני משתמש בהם</p>
+            <div class="deal-actions" id="tools-list"></div>
+          </section>
+        </main>
+
+        <footer class="em-footer">
+          <p>
+            חלק מהקישורים הם קישורי שותפים. אם מזמינים דרכם – אני מקבל עמלה קטנה,
+            וזה לא מייקר לכם.
+          </p>
+          <p class="credit">
+            מבוסס על
+            <a class="ltr" href="https://littlelink.io/" rel="noopener noreferrer" target="_blank">LittleLink</a>
+            · MIT
+          </p>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>
