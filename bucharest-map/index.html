@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>מפת לוז · בוקרשט · Escape Mode</title>
+    <meta name="description" content="הלוז שלי לבוקרשט 17–21.12 על מפה: שוק הכריסמס, העיר העתיקה, הפרלמנט, תרמה ועוד – יום אחרי יום.">
+    <meta name="robots" content="noindex,follow">
+    <meta name="theme-color" content="#fff8f1">
+    <link rel="canonical" href="https://ziv101010.github.io/bucharest-map/">
+    <link rel="icon" type="image/jpeg" href="../images/favicon.jpg">
+    <meta property="og:title" content="מפת לוז · בוקרשט · Escape Mode">
+    <meta property="og:description" content="5 ימים בבוקרשט על מפה, עם לינק ל-Google Maps לכל תחנה.">
+    <meta property="og:url" content="https://ziv101010.github.io/bucharest-map/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="he_IL">
+    <meta property="og:image" content="https://ziv101010.github.io/images/og.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="css/map.css?v=6">
+
+    <script src="js/config.js?v=1"></script>
+    <script src="js/stops.js?v=3" defer></script>
+    <script src="js/map.js?v=6" defer></script>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="top">
+        <a class="back" href="../" data-goatcounter-click="map-bucharest-back">→ לכל הדילים</a>
+        <span class="draft-badge" title="טיוטה – לא פורסם">טיוטה</span>
+        <p class="kicker">🇷🇴 הלוז שלי</p>
+        <h1>מפת לוז · בוקרשט</h1>
+        <p class="trip-meta" id="trip-meta">5 ימים</p>
+      </header>
+
+      <nav class="day-tabs" id="day-tabs" role="tablist" aria-label="בחירת יום"></nav>
+
+      <div class="layout">
+      <div class="col-map">
+      <div class="map-card">
+        <div id="map" role="region" aria-label="מפת התחנות בבוקרשט"></div>
+        <p class="map-fallback" id="map-fallback" hidden>המפה לא נטענה. הרשימה למטה עובדת גם בלי המפה.</p>
+      </div>
+      <p class="map-hint">
+        קו רציף = הליכה, קו מקווקו = נסיעה. הקווים ישרים בין התחנות ולא מסלול מדויק – לניווט לחצו על „מסלול היום ב-<span class="ltr" translate="no">Google Maps</span>”.
+      </p>
+      <p class="map-hint" id="outside-note">✈️ שדה התעופה ותרמה נמצאים צפונית לעיר (כ־<span class="ltr">15–20</span> ק״מ) – רואים אותם בלשוניות של יום <span class="ltr">1</span>, <span class="ltr">3</span> ו־5.</p>
+      <p class="map-hint alt-note" id="alt-note">★ טירת בראן היא אופציה ליום 4 ומופיעה רק בלשונית של יום 4.</p>
+
+      </div>
+      <aside class="col-list" aria-label="רשימת התחנות">
+        <div class="stop-list" id="stop-list"></div>
+      </aside>
+      </div>
+
+      <section class="deal-card" aria-labelledby="deals-label">
+        <p class="section-label" id="deals-label">להזמין לטיול</p>
+        <div class="deal-actions" id="deal-actions"></div>
+        <p class="fine">מחירים משתנים, תבדקו לפני הזמנה. המחיר 558&nbsp;₪ נבדק <span style="white-space:nowrap">ב-9.11</span>.</p>
+      </section>
+
+      <a class="btn btn-ig" id="cta-ig" href="https://www.instagram.com/escape.mode.go/" rel="noopener noreferrer" data-goatcounter-click="map-bucharest-instagram">עוד לוזים באינסטגרם · <bdi dir="ltr">@escape.mode.go</bdi></a>
+
+      <footer class="em-footer">
+        <p>חלק מהקישורים הם קישורי שותפים. אם מזמינים דרכם – אני מקבל עמלה קטנה, וזה לא מייקר לכם.</p>
+        <p class="credit">מפה, דירוגים ושעות פתיחה: <span class="em-gmaps-attr" translate="no">Google Maps</span></p>
+      </footer>
+    </div>
+
+    <!-- GoatCounter: same site as the link page. Ignores localhost; safe if blocked. -->
+    <script data-goatcounter="https://escapemodego.goatcounter.com/count"
+            async
+            src="https://gc.zgo.at/count.js"></script>
+  </body>
+</html>
