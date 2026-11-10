@@ -1,5 +1,5 @@
 /**
- * Escape Mode – Bucharest itinerary map data (DRAFT)
+ * Escape Mode – Bucharest itinerary map data
  *
  * Itinerary source (verbatim, read-only GET on 2026-11-10):
  *   - Zernio לוז DM workflow 6aec8ad09cfad7e3c9db49d3 + Bucharest comment automation 6af1afc4331cf75def7a03c1
@@ -10,7 +10,12 @@
  *   (raw responses in _src/gemini-maps/). Only fields present in groundingChunks; nothing invented.
  * Hours in this file are Hebrew 24h (see _src/hours_he.py). English originals stay in stops-enriched.json.
  * Airport hours from Maps were omitted here (they looked like a facility timetable, not terminal hours).
- * Never invent stops or links here.
+ * Booking buttons (book[]): Travelpayouts partner links for marker 620113, only for
+ *   programs already connected. sub_id is applied in map.js as map_bucharest_<stop>.
+ * Hotels: public Booking.com guest ratings opened 2026-11-10 (Asia/Jerusalem);
+ *   coordinates from OSM Nominatim the same day. No hotel affiliate links —
+ *   Booking.com (84), Hotellook (101) and Agoda (104) are not subscribed on this project.
+ * Never invent stops, links, or ratings here.
  */
 window.ESCAPE_MAP_BUCHAREST = {
   slug: "bucharest",
@@ -38,6 +43,10 @@ window.ESCAPE_MAP_BUCHAREST = {
     airport: {
       name: "נמל התעופה הנרי קואנדה", latin: "Henri Coandă (OTP)",
       line: "נחיתה בסביבות 18:30", lat: 44.5703108, lng: 26.0776011, deal: "transfer", outside: true,
+      book: [
+        { program: "Yesim", label: "📶 eSIM לרומניה · Yesim", className: "btn-tool", url: "https://yesim.tpk.lu/JykjOpT6" },
+        { program: "AirHelp", label: "פיצוי על עיכוב טיסה · AirHelp", className: "btn-tool", url: "https://airhelp.tpk.lu/eHiF6Xx3" }
+      ],
       maps: { title: "Bucharest Henri Coandă International Airport", uri: "https://maps.google.com/maps?cid=1247037147080132478", placeId: "ChIJd49YtoEcskARfodtna1dThE", rating: 3.7, reviewCount: 43413 }
     },
     market: {
@@ -68,11 +77,17 @@ window.ESCAPE_MAP_BUCHAREST = {
     parliament: {
       name: "ארמון הפרלמנט", latin: "Palatul Parlamentului",
       line: "סיור – להזמין מראש", lat: 44.4275103, lng: 26.0872481,
+      book: [
+        { program: "Tiqets", label: "כרטיס לפרלמנט · Tiqets", className: "btn-tour", url: "https://tiqets.tpk.lu/LFQlmZND" }
+      ],
       maps: { title: "Palace of Parliament", uri: "https://maps.google.com/maps?cid=3103131841547972060", placeId: "ChIJwSjue0L_sUAR3K2rAviJECs", rating: 4.4, reviewCount: 8555, hoursNote: "כל יום 09:00–17:00" }
     },
     therme: {
       name: "תרמה בוקרשט", latin: "Therme București",
       line: "מחוץ לעיר (Balotești), כ-20 ק״מ צפונה, ליד שדה התעופה", lat: 44.6054241, lng: 26.0853550, deal: "therme", outside: true,
+      book: [
+        { program: "Klook", label: "כרטיס לתרמה · Klook", className: "btn-tour", url: "https://klook.tpk.lu/87GTfKXQ" }
+      ],
       maps: { title: "Therme Bucharest", uri: "https://maps.google.com/maps?cid=17874926002267440966", placeId: "ChIJC1ABONsbskARRkeLX35-EPg", rating: 4.4, reviewCount: 48495, hoursNote: "ב׳–ה׳ 10:00–23:00 · ו׳–ש׳ 09:00–00:00 · א׳ 09:00–23:00" }
     },
     athenaeum: {
@@ -93,14 +108,84 @@ window.ESCAPE_MAP_BUCHAREST = {
     bran: {
       name: "טירת בראן", latin: "Bran Castle",
       line: "אופציה ליום 4 · כ-134 ק״מ בקו אווירי מבוקרשט", lat: 45.5150774, lng: 25.3672373, deal: "bran", optional: true,
+      book: [
+        { program: "Tiqets", label: "כרטיסים לטירת בראן · Tiqets", className: "btn-tour", url: "https://tiqets.tpk.lu/FESbKi7S" },
+        { program: "Localrent", label: "השכרת רכב ליום בראן · Localrent", className: "btn-car", url: "https://localrent.tpk.lu/7BROXCqS" }
+      ],
       maps: { title: "Bran Castle", uri: "https://maps.google.com/maps?cid=14957060824112409471", placeId: "ChIJMd4VpOVHs0ARf6sh2ZInks8", rating: 4.3, reviewCount: 115130, hoursNote: "ב׳ 12:00–18:00 · ג׳–א׳ 09:00–18:00" }
     },
     airport2: {
       name: "נמל התעופה הנרי קואנדה", latin: "Henri Coandă (OTP)",
       line: "אחרי בוקר חופשי – לטיסה הביתה", lat: 44.5703108, lng: 26.0776011, deal: "transfer", outside: true,
+      book: [
+        { program: "Yesim", label: "📶 eSIM לרומניה · Yesim", className: "btn-tool", url: "https://yesim.tpk.lu/JykjOpT6" },
+        { program: "AirHelp", label: "פיצוי על עיכוב טיסה · AirHelp", className: "btn-tool", url: "https://airhelp.tpk.lu/eHiF6Xx3" }
+      ],
       maps: { title: "Bucharest Henri Coandă International Airport", uri: "https://maps.google.com/maps?cid=1247037147080132478", placeId: "ChIJd49YtoEcskARfodtna1dThE", rating: 3.7, reviewCount: 43413 }
     }
   },
+
+
+  /* Central hotels. Ratings: Booking.com guest score, opened 2026-11-10 (Asia/Jerusalem).
+     Coordinates: OSM Nominatim, 2026-11-10. No affiliate URL — no hotel program is connected. */
+  hotels: [
+    {
+      id: "marmorosch",
+      slug: "marmorosch",
+      name: "מארמורוש בוקרשט",
+      latin: "The Marmorosch Bucharest, Autograph Collection",
+      area: "העיר העתיקה",
+      lat: 44.4337450, lng: 26.0990952,
+      rating: 9.2, reviewCount: 3995, ratingScale: 10,
+      ratingSource: "Booking.com",
+      ratingDate: "2026-11-10",
+      sourceUrl: "https://www.booking.com/hotel/ro/the-marmorosch-bucharest-autograph-collection.html",
+      coordSource: "OpenStreetMap Nominatim, 2026-11-10",
+      osm: "node/9117139108"
+    },
+    {
+      id: "athenee-palace",
+      slug: "athenee-palace",
+      name: "אינטרקונטיננטל אתנה פאלאס",
+      latin: "InterContinental Athénée Palace Bucharest by IHG",
+      area: "פיאצה רומנה",
+      lat: 44.4414277, lng: 26.0957572,
+      rating: 9.3, reviewCount: 2140, ratingScale: 10,
+      ratingSource: "Booking.com",
+      ratingDate: "2026-11-10",
+      sourceUrl: "https://www.booking.com/hotel/ro/intercontinental-athenee-palace-bucharest.html",
+      coordSource: "OpenStreetMap Nominatim, 2026-11-10",
+      osm: "way/232347742"
+    },
+    {
+      id: "grand-continental",
+      slug: "grand-continental",
+      name: "גרנד הוטל קונטיננטל",
+      latin: "Grand Hotel Continental Bucuresti",
+      area: "קליה ויקטוריי",
+      lat: 44.4370264, lng: 26.0979703,
+      rating: 9.1, reviewCount: 1903, ratingScale: 10,
+      ratingSource: "Booking.com",
+      ratingDate: "2026-11-10",
+      sourceUrl: "https://www.booking.com/hotel/ro/grand-continental.html",
+      coordSource: "OpenStreetMap Nominatim, 2026-11-10",
+      osm: "way/164369116"
+    },
+    {
+      id: "hilton-old-town",
+      slug: "hilton-old-town",
+      name: "הילטון גארדן אין · העיר העתיקה",
+      latin: "Hilton Garden Inn Bucharest Old Town",
+      area: "העיר העתיקה",
+      lat: 44.4329513, lng: 26.1008092,
+      rating: 9.1, reviewCount: 4151, ratingScale: 10,
+      ratingSource: "Booking.com",
+      ratingDate: "2026-11-10",
+      sourceUrl: "https://www.booking.com/hotel/ro/hilton-garden-inn-bucharest-romania.html",
+      coordSource: "OpenStreetMap Nominatim, 2026-11-10",
+      osm: "node/6162234562"
+    }
+  ],
 
   /* Verbatim from linkpage_update/deals.js (active.links). */
   deals: [

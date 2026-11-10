@@ -19,6 +19,9 @@
   var activeDay = "all";
   var mapReady = false;
   var PinOverlay = null;
+  var hotelMarkers = {};
+  var hotelsOn = true;
+  var HOTEL_COLOR = "#9a3412";
 
   /* ---- same helpers as linkpage subid.patch ---- */
   function allowedHttpUrl(value) {
@@ -80,6 +83,24 @@
     a.target = "_blank";
     track(a, deal.id);
     return a;
+  }
+  function bookLink(stopId, book) {
+    var href = allowedHttpUrl(book.url);
+    if (!href) return null;
+    var a = el("a", "btn btn-sm " + (book.className || "btn-tour"), book.label);
+    a.href = withSubId(href, "map_bucharest_" + stopId);
+    a.rel = "sponsored noopener noreferrer";
+    a.target = "_blank";
+    track(a, "book-" + stopId);
+    return a;
+  }
+  function hrefKey(href) {
+    try {
+      var u = new URL(href);
+      u.search = "";
+      u.hash = "";
+      return u.href.replace(/\/$/, "");
+    } catch (e) { return href; }
   }
   function dayLabel(day) { return "יום " + day.n + " · " + LRI + day.date + PDI; }
 
@@ -169,11 +190,58 @@
     track(g, id.replace(/\d+$/, "") + "-gmaps");
     w.appendChild(g);
     appendMapsAttribution(w, s);
+    var seen = {};
+    var books = s.book || [];
+    if (books.length) {
+      var box = el("div", "em-popup-book");
+      books.forEach(function (bk) {
+        var a = bookLink(id, bk);
+        if (!a) return;
+        seen[hrefKey(a.href)] = true;
+        box.appendChild(a);
+      });
+      if (box.childNodes.length) w.appendChild(box);
+    }
     if (s.deal) {
       var dl = dealById(s.deal);
       var a = dl && dealLink(dl, "btn-sm");
-      if (a) w.appendChild(a);
+      if (a && !seen[hrefKey(a.href)]) w.appendChild(a);
     }
+    return w;
+  }
+
+  function formatHotelRating(h) {
+    if (h.rating == null) return "";
+    var t = String(h.rating);
+    if (h.ratingScale) t += " / " + h.ratingScale;
+    if (h.reviewCount != null) t += " · " + Number(h.reviewCount).toLocaleString("he-IL") + " ביקורות";
+    return t;
+  }
+  function formatHotelDate(iso) {
+    if (!iso) return "";
+    var p = String(iso).split("-");
+    if (p.length !== 3) return iso;
+    return p[2] + "." + p[1] + "." + p[0];
+  }
+  function hotelPopupNode(h) {
+    var w = el("div", "em-popup em-popup--hotel");
+    w.dir = "rtl";
+    w.appendChild(el("div", "em-popup-day", "לינה · " + h.area));
+    w.appendChild(el("strong", "em-popup-name", h.name));
+    var lat = el("bdi", "em-popup-latin", h.latin);
+    lat.dir = "ltr";
+    w.appendChild(lat);
+    if (h.rating != null) {
+      var row = el("p", "em-popup-rating");
+      row.dir = "ltr";
+      row.appendChild(el("span", "em-star", "★"));
+      row.appendChild(document.createTextNode(" " + formatHotelRating(h)));
+      w.appendChild(row);
+    }
+    var src = el("p", "em-popup-source");
+    src.textContent = "מקור: " + (h.ratingSource || "") + (h.ratingDate ? ", " + formatHotelDate(h.ratingDate) : "");
+    w.appendChild(src);
+    /* No affiliate hotel link: no hotel program is connected on this Travelpayouts project. */
     return w;
   }
 
@@ -196,6 +264,7 @@
       this.color_ = opts.color;
       this.label_ = opts.label;
       this.optional_ = !!opts.optional;
+      this.kind_ = opts.kind || "stop";
       this.title_ = opts.title || "";
       this.onClick_ = opts.onClick;
       this.div_ = null;
@@ -210,9 +279,14 @@
       wrap.style.cursor = "pointer";
       if (this.title_) wrap.title = this.title_;
       var pin = document.createElement("span");
-      pin.className = "em-pin" + (this.optional_ ? " em-pin--alt" : "");
+      pin.className = "em-pin" + (this.optional_ ? " em-pin--alt" : "") + (this.kind_ === "hotel" ? " em-pin--hotel" : "");
       pin.style.setProperty("--c", this.color_);
-      pin.textContent = this.optional_ ? "★" : String(this.label_);
+      if (this.kind_ === "hotel") {
+        pin.setAttribute("aria-hidden", "true");
+        pin.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" focusable="false"><path fill="currentColor" d="M4 11V9a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2h3a2 2 0 0 1 2 2v5h-2v-2H4v2H2v-7a2 2 0 0 1 2-2zm3-3a1 1 0 0 0-1 1v2h6V9a1 1 0 0 0-1-1H7z"/></svg>';
+      } else {
+        pin.textContent = this.optional_ ? "★" : String(this.label_);
+      }
       wrap.appendChild(pin);
       var self = this;
       wrap.addEventListener("click", function (e) {
@@ -287,6 +361,41 @@
     Object.keys(listItems).forEach(function (k) { listItems[k].classList.toggle("is-active", k === key); });
   }
 
+  function openHotelPopup(h) {
+    if (!mapReady || !infoWindow || !h) return;
+    var rec = hotelMarkers[h.id];
+    if (!rec) return;
+    infoWindow.setContent(hotelPopupNode(h));
+    infoWindow.setPosition(rec.position);
+    infoWindow.open({ map: map });
+    highlight("hotel:" + h.id);
+    google.maps.event.addListenerOnce(infoWindow, "domready", function () { rebindGoat(); });
+  }
+  function focusHotel(id) {
+    var h = (D.hotels || []).filter(function (x) { return x.id === id; })[0];
+    if (!h) return;
+    highlight("hotel:" + id);
+    var rec = hotelMarkers[id];
+    if (mapReady && rec) {
+      map.panTo(rec.position);
+      openHotelPopup(h);
+    }
+  }
+  function setHotelsVisible(on) {
+    hotelsOn = !!on;
+    var btn = document.getElementById("hotels-toggle");
+    if (btn) btn.setAttribute("aria-pressed", hotelsOn ? "true" : "false");
+    var blk = document.getElementById("hotel-block");
+    if (blk) blk.hidden = !hotelsOn;
+    Object.keys(hotelMarkers).forEach(function (id) {
+      var rec = hotelMarkers[id];
+      if (rec && rec.overlay) rec.overlay.setMap(hotelsOn && mapReady ? map : null);
+    });
+    if (!hotelsOn) {
+      var act = document.querySelector(".stop.stop--hotel.is-active");
+      if (act) closePopup();
+    }
+  }
   function focusStop(key) {
     var it = markers[key];
     if (it) {
@@ -317,6 +426,14 @@
   }
   addTab("all", "כל הימים", "#1c2430");
   D.days.forEach(function (day) { addTab(day.n, dayLabel(day), day.color); });
+  var hotelsToggle = el("button", "layer-toggle");
+  hotelsToggle.type = "button";
+  hotelsToggle.id = "hotels-toggle";
+  hotelsToggle.setAttribute("aria-pressed", hotelsOn ? "true" : "false");
+  hotelsToggle.textContent = "איפה לישון";
+  hotelsToggle.addEventListener("click", function () { setHotelsVisible(!hotelsOn); });
+  var layerBar = document.getElementById("layer-bar") || tabs.parentNode;
+  layerBar.appendChild(hotelsToggle);
   tabs.addEventListener("keydown", function (e) {
     if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
     var all = Array.prototype.slice.call(tabs.querySelectorAll(".day-tab"));
@@ -387,6 +504,49 @@
     list.appendChild(blk);
   });
 
+  /* ---- hotels list ---- */
+  var hotelListHost = document.getElementById("stop-list");
+  if (hotelListHost && D.hotels && D.hotels.length) {
+    var hBlk = el("section", "day-block hotel-block");
+    hBlk.id = "hotel-block";
+    hBlk.style.setProperty("--c", HOTEL_COLOR);
+    hBlk.hidden = !hotelsOn;
+    var hHead = el("div", "day-head");
+    hHead.appendChild(el("span", "day-badge hotel-badge", "לינה"));
+    var hTxt = el("div", "day-head-text");
+    hTxt.appendChild(el("strong", "", "איפה לישון"));
+    hTxt.appendChild(el("span", "day-date", "מרכז העיר · דירוגי Booking.com"));
+    hHead.appendChild(hTxt);
+    hBlk.appendChild(hHead);
+    var hul = el("ul", "stops");
+    D.hotels.forEach(function (h) {
+      var key = "hotel:" + h.id;
+      var li = el("li", "stop stop--hotel");
+      var btn = el("button", "stop-btn");
+      btn.type = "button";
+      var num = el("span", "stop-num hotel-num");
+      num.setAttribute("aria-hidden", "true");
+      num.innerHTML = '<svg viewBox="0 0 24 24" width="14" height="14" focusable="false"><path fill="currentColor" d="M4 11V9a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v2h3a2 2 0 0 1 2 2v5h-2v-2H4v2H2v-7a2 2 0 0 1 2-2zm3-3a1 1 0 0 0-1 1v2h6V9a1 1 0 0 0-1-1H7z"/></svg>';
+      btn.appendChild(num);
+      var tx = el("div", "stop-text");
+      tx.appendChild(el("div", "stop-name", h.name));
+      var latin = el("bdi", "stop-latin", h.latin);
+      latin.dir = "ltr";
+      tx.appendChild(latin);
+      tx.appendChild(el("div", "stop-line", h.area));
+      if (h.rating != null) tx.appendChild(el("div", "stop-rating", "★ " + formatHotelRating(h)));
+      btn.appendChild(tx);
+      btn.addEventListener("click", function () { focusHotel(h.id); });
+      li.appendChild(btn);
+      hul.appendChild(li);
+      listItems[key] = li;
+    });
+    hBlk.appendChild(hul);
+    var note = el("p", "hotel-source-note", "הדירוגים מאתר Booking.com, נבדקו ב-10.11.2026. אין קישור הזמנה שותפים — תוכנית מלונות לא מחוברת.");
+    hBlk.appendChild(note);
+    hotelListHost.appendChild(hBlk);
+  }
+
   /* ---- deals ---- */
   var dealsWrap = document.getElementById("deal-actions");
   D.deals.forEach(function (d) { var a = dealLink(d); if (a) dealsWrap.appendChild(a); });
@@ -396,6 +556,9 @@
 
 
   window.__emBuildHoursVal = hoursValNode;
+  window.__emBuildPopup = popupNode;
+  window.__emBuildHotelPopup = hotelPopupNode;
+  window.__emBookLink = bookLink;
   show("all");
   rebindGoat();
 
@@ -463,7 +626,22 @@
     });
     mapReady = true;
     show(activeDay);
-  }
+  
+    (D.hotels || []).forEach(function (h) {
+      var position = { lat: h.lat, lng: h.lng };
+      var rec = { id: h.id, hotel: h, position: position, overlay: null };
+      rec.overlay = new PinOverlay({
+        position: position,
+        color: HOTEL_COLOR,
+        label: "",
+        kind: "hotel",
+        title: h.name,
+        onClick: function () { focusHotel(h.id); }
+      });
+      hotelMarkers[h.id] = rec;
+      if (hotelsOn) rec.overlay.setMap(map);
+    });
+}
 
   function initGoogleMap() {
     var elMap = document.getElementById("map");
