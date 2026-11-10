@@ -24,6 +24,14 @@
     return hostname === "tpk.lu" || hostname.endsWith(".tpk.lu");
   }
 
+  /* Root-relative path on this site only. Reject protocol-relative URLs. */
+  function sameSitePath(value) {
+    if (typeof value !== "string") return "";
+    var path = value.trim();
+    if (path.charAt(0) !== "/" || path.charAt(1) === "/" || path.charAt(1) === "\\") return "";
+    return path;
+  }
+
   function withTravelpayoutsSubId(href, destSlug) {
     if (!href || !destSlug) return href;
     try {
@@ -89,6 +97,22 @@
       }
       actions.appendChild(a);
     });
+
+    if (deal.mapLink) {
+      var mapHref = sameSitePath(deal.mapLink.url);
+      var mapLabel = deal.mapLink.label;
+      var mapClick = deal.mapLink.click;
+      if (mapHref && typeof mapLabel === "string" && mapLabel) {
+        var mapLink = document.createElement("a");
+        mapLink.className = "btn btn-map";
+        mapLink.href = mapHref;
+        mapLink.textContent = mapLabel;
+        if (typeof mapClick === "string" && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(mapClick)) {
+          mapLink.setAttribute("data-goatcounter-click", mapClick);
+        }
+        actions.appendChild(mapLink);
+      }
+    }
 
     card.appendChild(badge);
     card.appendChild(title);
