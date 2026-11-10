@@ -1,4 +1,4 @@
-/* Escape Mode – Bucharest map (DRAFT). Palette/typography copied from ../css/escape.css */
+/* Escape Mode – Bucharest map. Palette/typography copied from ../css/escape.css */
 :root {
   --em-bg: #fff8f1; --em-ink: #1c2430; --em-muted: #5b6573; --em-card: #ffffff;
   --em-border: #f0e2d2; --em-coral: #ff6b4a; --em-coral-deep: #e85a3c;
@@ -173,4 +173,33 @@ footer.em-footer .credit { opacity: 0.8; }
   #map { height: 66vh; max-height: 620px; }
   .deal-card, #cta-ig, footer.em-footer { max-width: 30rem; margin-inline: auto; }
 }
-@media (max-width: 360px) { h1 { font-size: 1.6rem; } .btn { font-size: 0.95rem; } }
+
+/* hotel layer toggle + pins */
+.layer-bar { display: flex; justify-content: flex-start; padding: 0 0.1rem 0.55rem; }
+.layer-toggle {
+  font: inherit; font-size: 0.88rem; font-weight: 700; white-space: nowrap;
+  padding: 0.45rem 0.85rem; border-radius: 999px; cursor: pointer;
+  background: #fff; color: #9a3412; border: 2px solid #9a3412;
+}
+.layer-toggle[aria-pressed="true"] { background: #9a3412; color: #fff; box-shadow: 0 6px 14px rgba(154, 52, 18, 0.2); }
+.layer-toggle:focus-visible { outline: 3px solid #ffd0c2; outline-offset: 2px; }
+.em-pin--hotel {
+  border-radius: 8px; background: #9a3412; color: #fff;
+}
+.em-pin--hotel svg { display: block; }
+.hotel-block { --c: #9a3412; }
+.hotel-badge, .stop--hotel .stop-num, .hotel-num { background: #9a3412; color: #fff; border-radius: 8px; }
+.hotel-num { display: flex; align-items: center; justify-content: center; }
+.hotel-num svg { display: block; }
+.hotel-source-note { margin: 0.55rem 0 0; font-size: 0.78rem; color: var(--em-muted); line-height: 1.45; overflow-wrap: anywhere; }
+.em-popup-book { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.4rem; }
+.em-popup-book .btn { width: 100%; text-align: center; overflow-wrap: anywhere; white-space: normal; }
+.em-popup-source { margin: 0.15rem 0 0 !important; font-size: 0.78rem; color: var(--em-muted); line-height: 1.4; }
+.stop--hotel.is-active .stop-btn { background: color-mix(in srgb, #9a3412 12%, #fff); }
+
+@media (max-width: 390px) {
+  .em-popup { max-width: 100%; }
+  .btn-sm { font-size: 0.84rem; padding: 0.4rem 0.65rem; }
+}
+
+@media (max-width: 360px) { h1 { font-size: 1.6rem; } .btn { font-size: 0.95rem; } .layer-toggle { font-size: 0.82rem; padding: 0.4rem 0.7rem; } }
