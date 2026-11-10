@@ -70,7 +70,13 @@ window.ESCAPE_MODE_DEALS = {
         className: "btn-tool",
         url: "https://tpk.lu/LsjV6srf"
       }
-    ]
+    ],
+    /* Same-site itinerary page. Not an affiliate URL, so it never gets a sub_id. */
+    mapLink: {
+      label: "🗺️ מפת לו״ז בוקרשט",
+      url: "/bucharest-map/",
+      click: "linkpage-bucharest-map"
+    }
   },
 
   /* Older / secondary deals kept on the page under the featured card. */
